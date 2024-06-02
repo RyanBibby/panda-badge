@@ -2,6 +2,7 @@
 import math
 from .eye import Eye
 from .ticker import Ticker
+from .mouth import Mouth
 
 class Face:
     def __init__(self):
@@ -55,3 +56,16 @@ class Face:
             self.left_eye.render_winking(ctx)
         else:
             self.left_eye.render_open(ctx)
+
+        
+        # Snout 
+        ctx.linear_gradient(-20, 45, 40, 105)
+        ctx.add_stop(0, (240,240,240), 1)
+        ctx.add_stop(1, (50,50,50), 1)
+        ctx.arc(0, 60, 30, 0, 2 * math.pi, True).fill()
+
+        # Nose
+        ctx.gray(0).begin_path()
+        ctx.move_to(-10,50)
+        ctx.curve_to(0, 60, 0, 60, 10, 50)
+        ctx.fill()
