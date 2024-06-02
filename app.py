@@ -1,9 +1,9 @@
-import asyncio
 import app
-import math
-import random
-import sys
 from tildagonos import tildagonos
+from system.eventbus import eventbus
+from system.patterndisplay.events import *
+from app_components import clear_background
+
 from .face import Face
 from .colour import Colour
 from .background import Background
@@ -11,51 +11,30 @@ from .ticker import Ticker
 from .state import State
 from .button_helper import ButtonHelper
 
-
-from events.input import Buttons, BUTTON_TYPES
-from app_components import clear_background
-
-from system.eventbus import eventbus
-from system.patterndisplay.events import *
-
 class App(app.App):
 
     def __init__(self):
 
-        self.button_states = Buttons(self)
         self.button_helper = ButtonHelper(self)
-  
-        self.can_change = True
-        self.manual = False
-     
-
         self.state = State()
-
         self.background = Background()
         self.face = Face()
 
+        self.free_to_update = True
 
     def update(self, delta):
 
-        if self.manual:   
-            for i in range(0,12):
-                tildagonos.leds[i+1] = (100, 100, 100)
-
-        if self.button_helper.cancel_pressed() and self.button_helper.left_pressed() and self.can_change:
-            self.manual = not self.manual
-            self.can_change = False
-            if self.manual:
-                eventbus.emit(PatternDisable())
-            else:
-                eventbus.emit(PatternEnable())
-     
-        elif self.can_change and self.button_helper.confirm_pressed(): 
+        if self.button_helper.cancel_pressed() and self.button_helper.left_pressed() and self.free_to_update:
+            # Change mode here
+            self.free_to_update = False
+        elif self.free_to_update and self.button_helper.confirm_pressed(): 
             self.state.next_state()
-            self.can_change = False
+            self.free_to_update = False
         elif not self.button_helper.any_buttons_pressed():
-            self.can_change = True
+            self.free_to_update = True
 
     def draw(self, ctx):
+
         clear_background(ctx)
 
         self.background.render(ctx)
@@ -67,7 +46,7 @@ class App(app.App):
 
     def render_heart(self, ctx):
 
-        if Ticker.is_active_frame() or self.manual:
+        if Ticker.is_active_frame():
 
             ctx.linear_gradient(-100, -120, 90, -10)
             ctx.add_stop(0, (255,200,200), 1)

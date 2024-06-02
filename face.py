@@ -5,18 +5,13 @@ from .ticker import Ticker
 from .mouth import Mouth
 
 class Face:
+
     def __init__(self):
+        
         self.left_eye = Eye(-25, 30)
         self.right_eye = Eye(25, 30)
 
-        self.left_ear = None
-        self.right_ear = None
-
         self.mouth = Mouth()
-
-        self.heart = None
-    
-
 
     def render(self, ctx, emotion):
         # Ears

@@ -1,4 +1,4 @@
-import math
+from .ticker import Ticker
 
 class Mouth:
 
@@ -21,10 +21,11 @@ class Mouth:
         ctx.stroke()
 
     def render_flirty(self, ctx):
-        ctx.rgb(1,0,0).begin_path()
-        ctx.move_to(-5,71)
-        ctx.curve_to(-6, 83, 6, 83, 5, 71)
-        ctx.fill()         
+        if Ticker.is_active_frame():
+            ctx.rgb(1,0,0).begin_path()
+            ctx.move_to(-5,71)
+            ctx.curve_to(-6, 83, 6, 83, 5, 71)
+            ctx.fill()         
 
         self.render_smile(ctx)
 
