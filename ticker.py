@@ -12,3 +12,7 @@ class Ticker:
         if cls.tick_frame % 5 == 0:
             cls.tock = not cls.tock
         cls.tick_frame += 1
+
+    @classmethod
+    def get_tick(cls):
+        return cls.tick_frame

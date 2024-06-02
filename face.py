@@ -42,15 +42,10 @@ class Face:
         ctx.curve_to(-16, -35, 16, -35, 45, -10)
         ctx.fill()
 
-
-
         if emotion == "sad":
             self.right_eye.render_tear(ctx)
         else:
             self.right_eye.render_open(ctx)
-
-        # if emotion == "flirty" and self.show and (not self.manual):
-
 
         if emotion == "flirty" and Ticker.is_active_frame():
             self.left_eye.render_winking(ctx)
@@ -72,26 +67,9 @@ class Face:
 
         if emotion == "flirty":
             self.mouth.render_flirty(ctx)
-        #     ctx.rgb(1,0,0).begin_path()
-        #     ctx.move_to(-5,71)
-        #     ctx.curve_to(-6, 83, 6, 83, 5, 71)
-        #     ctx.fill()
-
         elif emotion == "happy":
             self.mouth.render_smile(ctx)
-        #     ctx.gray(0).begin_path()
-        #     ctx.move_to(-10,65)
-        #     ctx.curve_to(0, 75, 0, 75, 10, 65)
-        #     ctx.stroke()
         elif emotion == "confused":
             self.mouth.render_confused(ctx)
-        #     ctx.gray(0).begin_path()
-        #     ctx.move_to(-10,70)
-        #     ctx.curve_to(0, 75, 5, 60, 10, 70)
-        #     ctx.stroke()
         else:
             self.mouth.render_sad(ctx)
-        #     ctx.gray(0).begin_path()
-        #     ctx.move_to(-10,70)
-        #     ctx.curve_to(0, 60, 0, 60, 10, 70)
-        #     ctx.stroke()

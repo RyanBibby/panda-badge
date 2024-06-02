@@ -17,7 +17,9 @@ from system.eventbus import eventbus
 from system.patterndisplay.events import *
 
 class App(app.App):
+    
     def __init__(self):
+
         self.button_states = Buttons(self)
         self.tick = 0
         self.emotion = "happy"
@@ -25,10 +27,7 @@ class App(app.App):
         self.can_change = True
         self.manual = False
 
-
-
-        self.left_eye = True
-        self.right_eye = True
+     
         self.tounge = False
 
         self.background = Background()
@@ -74,33 +73,6 @@ class App(app.App):
         self.background.render(ctx)
         self.face.render(ctx, self.emotion)
 
-        # Smile
-
-        # if (self.emotion == "flirty" and not self.manual) or (self.manual and self.tounge):
-        #     ctx.rgb(1,0,0).begin_path()
-        #     ctx.move_to(-5,71)
-        #     ctx.curve_to(-6, 83, 6, 83, 5, 71)
-        #     ctx.fill()
-
-        # if self.emotion == "happy" or self.emotion == "flirty" or self.manual:
-        #     ctx.gray(0).begin_path()
-        #     ctx.move_to(-10,65)
-        #     ctx.curve_to(0, 75, 0, 75, 10, 65)
-        #     ctx.stroke()
-        # elif self.emotion == "confused":
-        #     ctx.gray(0).begin_path()
-        #     ctx.move_to(-10,70)
-        #     ctx.curve_to(0, 75, 5, 60, 10, 70)
-        #     ctx.stroke()
-        # else:
-        #     ctx.gray(0).begin_path()
-        #     ctx.move_to(-10,70)
-        #     ctx.curve_to(0, 60, 0, 60, 10, 70)
-        #     ctx.stroke()
-        
-     
-
-
         # Heart
         
         if Ticker.is_active_frame() or self.manual:
@@ -111,12 +83,12 @@ class App(app.App):
             ctx.add_stop(2, (0,0,0), 1)
 
             ctx.begin_path()
-            ctx.move_to(0, -90);
-            ctx.curve_to(70, -110, 100, -60, 0, -35);
-            ctx.fill();
-            ctx.move_to(0, -90);
-            ctx.curve_to(-70, -110, -100, -60, 0, -35);
-            ctx.fill();
+            ctx.move_to(0, -90)
+            ctx.curve_to(70, -110, 100, -60, 0, -35)
+            ctx.fill()
+            ctx.move_to(0, -90)
+            ctx.curve_to(-70, -110, -100, -60, 0, -35)
+            ctx.fill()
 
         Ticker.tick()
      
