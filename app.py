@@ -8,6 +8,7 @@ from .face import Face
 from .colour import Colour
 from .background import Background
 from .ticker import Ticker
+from .state import State
 
 
 from events.input import Buttons, BUTTON_TYPES
@@ -26,52 +27,39 @@ class App(app.App):
   
         self.can_change = True
         self.manual = False
-
      
-        self.tounge = False
+
+        self.state = State()
 
         self.background = Background()
         self.face = Face()
 
 
     def update(self, delta):
+
         if self.manual:   
             for i in range(0,12):
                 tildagonos.leds[i+1] = (100, 100, 100)
-        if self.button_states.get(BUTTON_TYPES["CANCEL"]) and self.button_states.get(BUTTON_TYPES["LEFT"]):
+                
+        if self.button_states.get(BUTTON_TYPES["CANCEL"]) and self.button_states.get(BUTTON_TYPES["LEFT"]) and self.can_change:
             self.manual = not self.manual
+            self.can_change = False
             if self.manual:
                 eventbus.emit(PatternDisable())
             else:
                 eventbus.emit(PatternEnable())
-        elif self.button_states.get(BUTTON_TYPES["DOWN"]):
-            self.tounge = not self.tounge
-        elif self.button_states.get(BUTTON_TYPES["CANCEL"]):
-            # self.button_states.clear()
-            # self.minimise()
-            True
+     
         elif self.can_change and self.button_states.get(BUTTON_TYPES["CONFIRM"]): 
-            if self.emotion == "happy":
-                self.emotion = "sad"
-            elif self.emotion == "sad":
-                self.emotion = "confused"
-            elif self.emotion == "confused":
-                self.emotion = "flirty"
-            else:
-                self.emotion = "happy"
+            self.state.next_state()
             self.can_change = False
-        elif not self.button_states.get(BUTTON_TYPES["CONFIRM"]):
+        elif not self.any_buttons_pressed():
             self.can_change = True
-            # # The button_states do not update while you are in the background.
-            # # Calling clear() ensures the next time you open the app, it stays open.
-            # # Without it the app would close again immediately.
-            # self.button_states.clear()
 
     def draw(self, ctx):
         clear_background(ctx)
 
         self.background.render(ctx)
-        self.face.render(ctx, self.emotion)
+        self.face.render(ctx, self.state.get_state())
 
         self.render_heart(ctx)
         
@@ -94,6 +82,14 @@ class App(app.App):
             ctx.curve_to(-70, -110, -100, -60, 0, -35)
             ctx.fill()
      
+    def any_buttons_pressed(self):
+        
+        return self.button_states.get(BUTTON_TYPES["UP"]) or \
+        self.button_states.get(BUTTON_TYPES["DOWN"]) or \
+        self.button_states.get(BUTTON_TYPES["LEFT"]) or \
+        self.button_states.get(BUTTON_TYPES["RIGHT"]) or \
+        self.button_states.get(BUTTON_TYPES["CONFIRM"]) or \
+        self.button_states.get(BUTTON_TYPES["CANCEL"])
 
 
 __app_export__ = App
