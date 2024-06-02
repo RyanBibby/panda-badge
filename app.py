@@ -9,6 +9,7 @@ from .colour import Colour
 from .background import Background
 from .ticker import Ticker
 from .state import State
+from .button_helper import ButtonHelper
 
 
 from events.input import Buttons, BUTTON_TYPES
@@ -22,8 +23,7 @@ class App(app.App):
     def __init__(self):
 
         self.button_states = Buttons(self)
-        self.tick = 0
-        self.emotion = "happy"
+        self.button_helper = ButtonHelper(self)
   
         self.can_change = True
         self.manual = False
@@ -40,8 +40,8 @@ class App(app.App):
         if self.manual:   
             for i in range(0,12):
                 tildagonos.leds[i+1] = (100, 100, 100)
-                
-        if self.button_states.get(BUTTON_TYPES["CANCEL"]) and self.button_states.get(BUTTON_TYPES["LEFT"]) and self.can_change:
+
+        if self.button_helper.cancel_pressed() and self.button_helper.left_pressed() and self.can_change:
             self.manual = not self.manual
             self.can_change = False
             if self.manual:
@@ -49,10 +49,10 @@ class App(app.App):
             else:
                 eventbus.emit(PatternEnable())
      
-        elif self.can_change and self.button_states.get(BUTTON_TYPES["CONFIRM"]): 
+        elif self.can_change and self.button_helper.confirm_pressed(): 
             self.state.next_state()
             self.can_change = False
-        elif not self.any_buttons_pressed():
+        elif not self.button_helper.any_buttons_pressed():
             self.can_change = True
 
     def draw(self, ctx):
@@ -81,15 +81,5 @@ class App(app.App):
             ctx.move_to(0, -90)
             ctx.curve_to(-70, -110, -100, -60, 0, -35)
             ctx.fill()
-     
-    def any_buttons_pressed(self):
-        
-        return self.button_states.get(BUTTON_TYPES["UP"]) or \
-        self.button_states.get(BUTTON_TYPES["DOWN"]) or \
-        self.button_states.get(BUTTON_TYPES["LEFT"]) or \
-        self.button_states.get(BUTTON_TYPES["RIGHT"]) or \
-        self.button_states.get(BUTTON_TYPES["CONFIRM"]) or \
-        self.button_states.get(BUTTON_TYPES["CANCEL"])
-
 
 __app_export__ = App
