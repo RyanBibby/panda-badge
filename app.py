@@ -17,7 +17,7 @@ from system.eventbus import eventbus
 from system.patterndisplay.events import *
 
 class App(app.App):
-    
+
     def __init__(self):
 
         self.button_states = Buttons(self)
@@ -73,8 +73,12 @@ class App(app.App):
         self.background.render(ctx)
         self.face.render(ctx, self.emotion)
 
-        # Heart
+        self.render_heart(ctx)
         
+        Ticker.tick()
+
+    def render_heart(self, ctx):
+
         if Ticker.is_active_frame() or self.manual:
 
             ctx.linear_gradient(-100, -120, 90, -10)
@@ -89,8 +93,6 @@ class App(app.App):
             ctx.move_to(0, -90)
             ctx.curve_to(-70, -110, -100, -60, 0, -35)
             ctx.fill()
-
-        Ticker.tick()
      
 
 
