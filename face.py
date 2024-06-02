@@ -12,7 +12,7 @@ class Face:
         self.left_ear = None
         self.right_ear = None
 
-        self.mouth = None
+        self.mouth = Mouth()
 
         self.heart = None
     
@@ -69,3 +69,29 @@ class Face:
         ctx.move_to(-10,50)
         ctx.curve_to(0, 60, 0, 60, 10, 50)
         ctx.fill()
+
+        if emotion == "flirty":
+            self.mouth.render_flirty(ctx)
+        #     ctx.rgb(1,0,0).begin_path()
+        #     ctx.move_to(-5,71)
+        #     ctx.curve_to(-6, 83, 6, 83, 5, 71)
+        #     ctx.fill()
+
+        elif emotion == "happy":
+            self.mouth.render_smile(ctx)
+        #     ctx.gray(0).begin_path()
+        #     ctx.move_to(-10,65)
+        #     ctx.curve_to(0, 75, 0, 75, 10, 65)
+        #     ctx.stroke()
+        elif emotion == "confused":
+            self.mouth.render_confused(ctx)
+        #     ctx.gray(0).begin_path()
+        #     ctx.move_to(-10,70)
+        #     ctx.curve_to(0, 75, 5, 60, 10, 70)
+        #     ctx.stroke()
+        else:
+            self.mouth.render_sad(ctx)
+        #     ctx.gray(0).begin_path()
+        #     ctx.move_to(-10,70)
+        #     ctx.curve_to(0, 60, 0, 60, 10, 70)
+        #     ctx.stroke()

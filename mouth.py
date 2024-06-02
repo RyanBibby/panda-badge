@@ -2,11 +2,30 @@ import math
 
 class Mouth:
 
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-        
-    def render_open(self, ctx):
-        ctx.gray(0).arc(self.x, self.y, 10, 0, 2 * math.pi, True).fill()
-        ctx.gray(1).arc(self.x - 5, self.y - 5, 2, 0, 2 * math.pi, True).fill()
+    def render_smile(self, ctx):
+        ctx.gray(0).begin_path()
+        ctx.move_to(-10,65)
+        ctx.curve_to(0, 75, 0, 75, 10, 65)
+        ctx.stroke()
+
+    def render_sad(self, ctx):
+        ctx.gray(0).begin_path()
+        ctx.move_to(-10,70)
+        ctx.curve_to(0, 60, 0, 60, 10, 70)
+        ctx.stroke()
+    
+    def render_confused(self, ctx):
+        ctx.gray(0).begin_path()
+        ctx.move_to(-10,70)
+        ctx.curve_to(0, 75, 5, 60, 10, 70)
+        ctx.stroke()
+
+    def render_flirty(self, ctx):
+        ctx.rgb(1,0,0).begin_path()
+        ctx.move_to(-5,71)
+        ctx.curve_to(-6, 83, 6, 83, 5, 71)
+        ctx.fill()         
+
+        self.render_smile(ctx)
+
 

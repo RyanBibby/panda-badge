@@ -76,27 +76,27 @@ class App(app.App):
 
         # Smile
 
-        if (self.emotion == "flirty" and not self.manual) or (self.manual and self.tounge):
-            ctx.rgb(1,0,0).begin_path()
-            ctx.move_to(-5,71)
-            ctx.curve_to(-6, 83, 6, 83, 5, 71)
-            ctx.fill()
+        # if (self.emotion == "flirty" and not self.manual) or (self.manual and self.tounge):
+        #     ctx.rgb(1,0,0).begin_path()
+        #     ctx.move_to(-5,71)
+        #     ctx.curve_to(-6, 83, 6, 83, 5, 71)
+        #     ctx.fill()
 
-        if self.emotion == "happy" or self.emotion == "flirty" or self.manual:
-            ctx.gray(0).begin_path()
-            ctx.move_to(-10,65)
-            ctx.curve_to(0, 75, 0, 75, 10, 65)
-            ctx.stroke()
-        elif self.emotion == "confused":
-            ctx.gray(0).begin_path()
-            ctx.move_to(-10,70)
-            ctx.curve_to(0, 75, 5, 60, 10, 70)
-            ctx.stroke()
-        else:
-            ctx.gray(0).begin_path()
-            ctx.move_to(-10,70)
-            ctx.curve_to(0, 60, 0, 60, 10, 70)
-            ctx.stroke()
+        # if self.emotion == "happy" or self.emotion == "flirty" or self.manual:
+        #     ctx.gray(0).begin_path()
+        #     ctx.move_to(-10,65)
+        #     ctx.curve_to(0, 75, 0, 75, 10, 65)
+        #     ctx.stroke()
+        # elif self.emotion == "confused":
+        #     ctx.gray(0).begin_path()
+        #     ctx.move_to(-10,70)
+        #     ctx.curve_to(0, 75, 5, 60, 10, 70)
+        #     ctx.stroke()
+        # else:
+        #     ctx.gray(0).begin_path()
+        #     ctx.move_to(-10,70)
+        #     ctx.curve_to(0, 60, 0, 60, 10, 70)
+        #     ctx.stroke()
         
      
 
