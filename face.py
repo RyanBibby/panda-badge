@@ -1,10 +1,11 @@
 
 import math
+from .eye import Eye
 
 class Face:
     def __init__(self):
         self.left_eye = None
-        self.right_eye = None
+        self.right_eye = Eye(25, 30)
 
         self.left_ear = None
         self.right_ear = None
@@ -36,3 +37,6 @@ class Face:
         ctx.move_to(-45,-10)
         ctx.curve_to(-16, -35, 16, -35, 45, -10)
         ctx.fill()
+
+        # Eyes
+        self.right_eye.render_open(ctx)
